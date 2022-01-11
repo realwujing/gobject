@@ -1,9 +1,9 @@
-/* file name: pm-dlist.h*/
- 
 #ifndef PM_DLIST_H
 #define PM_DLIST_H
  
 #include <glib-object.h>
+ 
+#define PM_TYPE_DLIST (pm_dlist_get_type ())
  
 typedef struct _PMDListNode PMDListNode;
 struct  _PMDListNode {
@@ -24,18 +24,15 @@ struct _PMDListClass {
         GObjectClass parent_class;
 };
  
+GType pm_dlist_get_type (void);
+ 
 #endif
 
 /**
- * @brief 使用 GObject 库模拟类的数据封装形式
- * 但是，上述代码的确构成了一个类。在 GObject 世界里，类是两个结构体的组合，
- * 一个是实例结构体，另一个是类结构体。例如，PMDList 是实例结构体，PMDListClass 是类结构体，
- * 它们合起来便可以称为 PMDList 类（此处的“PMDList 类”只是一个称谓，并非是指 PMDList 实例结构体。
- * 下文将要谈及的“GObject 类”的理解与此类似）。
-
- *也许你会注意到，PMDList 类的实例结构体的第一个成员是 GObject 结构体，
- *PMDList 类的类结构体的第一个成员是 GObjectClass 结构体。
- *其实，GObject 结构体与 GObjectClass 结构体分别是 GObject 类的实例结构体与类结构体，
- *当它们分别作为 PMDList 类的实例结构体与类结构体的第一个成员时，这意味着 PMDList 类继承自 GObject 类。
+ * @brief 显然，PM_TYPE_DLIST 这个宏是用来替代函数 pm_dlist_get_type 的，该函数的返回值是 GType 类型。
+ * 我们将 PM_TYPE_DLIST 宏作为 g_object_new 函数第一个参数，
+ * 这就意味着向 g_object_new 函数传递了一个看上去像是在获取数据类型的函数。
+ * 不需要猜测，也不需要去阅读 g_object_new 函数的源代码，g_object_new 之所以能够为我们进行对象的实例化，
+ * 那么它必然要知道对象对应的类的数据结构，pm_dlist_get_type 函数的作用就是告诉它有关 PMDList 类的具体结构。
  * 
  */
